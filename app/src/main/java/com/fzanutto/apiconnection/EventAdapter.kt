@@ -1,8 +1,6 @@
 package com.fzanutto.apiconnection
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fzanutto.apiconnection.databinding.EventListBinding
@@ -19,7 +17,7 @@ class EventAdapter(private val eventList: List<Event>): RecyclerView.Adapter<Eve
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val event = eventList[position]
-        holder.binding.text.text = event.nome
+        holder.binding.text.text = event.title
     }
 
     override fun getItemCount(): Int {

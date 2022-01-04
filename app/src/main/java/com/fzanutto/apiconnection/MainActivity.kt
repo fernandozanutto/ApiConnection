@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fzanutto.apiconnection.databinding.MainActivityBinding
-import com.fzanutto.apiconnection.model.Event
 import com.fzanutto.apiconnection.viewmodel.MainViewModel
+import com.fzanutto.apiconnection.viewmodel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,25 +16,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: MainActivityBinding
     private lateinit var adapter: EventAdapter
 
-    private val eventList = arrayListOf<Event>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        eventList.add(Event("Teste 1"))
-        eventList.add(Event("Teste 2"))
-        eventList.add(Event("Teste 3"))
+        viewModel = ViewModelProvider(this, MainViewModelFactory(this.application)).get(MainViewModel::class.java)
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
 
         binding.eventList.layoutManager = layoutManager
 
-        adapter = EventAdapter(eventList)
+        adapter = EventAdapter(viewModel.eventList)
         binding.eventList.adapter = adapter
     }
 }

@@ -1,7 +1,10 @@
 package com.fzanutto.apiconnection.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.fzanutto.apiconnection.model.Event
 
-class MainViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class MainViewModel(app: Application) : AndroidViewModel(app) {
+
+    val eventList = arrayListOf<Event>()
 }
