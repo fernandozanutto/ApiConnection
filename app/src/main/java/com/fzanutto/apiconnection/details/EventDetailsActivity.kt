@@ -2,6 +2,8 @@ package com.fzanutto.apiconnection.details
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.FrameLayout
+import androidx.fragment.app.FragmentContainerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.fzanutto.apiconnection.R
@@ -59,9 +61,8 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .load(event.imageUrl)
                 .placeholder(circularProgressDrawable)
                 .centerCrop()
-                .error(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_foreground)
                 .into(binding.image)
-
         }
     }
 
@@ -72,6 +73,5 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         val point = LatLng(event.latitude, event.longitude)
         mMap.addMarker(MarkerOptions().position(point).title(event.title))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 12f))
-
     }
 }

@@ -43,7 +43,7 @@ class EventAdapter(private var eventList: List<Event>) :
             .load(event.imageUrl)
             .placeholder(circularProgressDrawable)
             .centerCrop()
-            .error(R.drawable.ic_launcher_background)
+            .error(R.drawable.ic_launcher_foreground)
             .into(holder.binding.image)
 
         holder.binding.root.setOnClickListener {
