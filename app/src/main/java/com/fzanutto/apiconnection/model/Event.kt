@@ -1,5 +1,6 @@
 package com.fzanutto.apiconnection.model
 
+import java.io.Serializable
 import java.util.Date
 
 data class Event(
@@ -11,4 +12,4 @@ data class Event(
     val id: Int,
     val description: String,
     val price: Double
-)
+) : Serializable
