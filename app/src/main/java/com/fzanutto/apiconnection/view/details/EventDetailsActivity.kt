@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -85,6 +86,10 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
             price.text = numberFormat.format(event.price)
+
+            checkIn.setOnClickListener {
+                Toast.makeText(this@EventDetailsActivity, "aaaaa", Toast.LENGTH_SHORT).show()
+            }
 
             val circularProgressDrawable = CircularProgressDrawable(this@EventDetailsActivity)
             circularProgressDrawable.strokeWidth = 5f
