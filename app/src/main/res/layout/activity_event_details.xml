@@ -34,16 +34,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image" />
 
-        <TextView
-            android:id="@+id/value"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/date_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="@string/placeholder_price"
-            app:layout_constraintBottom_toTopOf="@id/description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintTop_toBottomOf="@id/title">
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/calendar" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_date" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/price_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@id/description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/monetization" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_price" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
             android:id="@+id/description"
@@ -52,7 +84,7 @@
             android:padding="20dp"
             android:text="@string/placeholder_description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/value" />
+            app:layout_constraintTop_toBottomOf="@id/price_layout" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
@@ -64,21 +96,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description"
             tools:context=".MapsActivity" />
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/map"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                />
-        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

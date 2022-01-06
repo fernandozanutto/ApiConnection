@@ -27,6 +27,7 @@
         <activity
             android:name=".details.EventDetailsActivity"
             android:exported="false"/>
+
         <activity
             android:name=".home.HomeActivity"
             android:exported="true"

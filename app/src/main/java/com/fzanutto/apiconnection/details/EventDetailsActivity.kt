@@ -20,6 +20,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -75,7 +78,12 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.apply {
             title.text = event.title
             description.text = event.description
-            value.text = event.price.toString()
+
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT)
+            date.text = dateFormat.format(event.date)
+
+            val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+            price.text = numberFormat.format(event.price)
 
             val circularProgressDrawable = CircularProgressDrawable(this@EventDetailsActivity)
             circularProgressDrawable.strokeWidth = 5f
