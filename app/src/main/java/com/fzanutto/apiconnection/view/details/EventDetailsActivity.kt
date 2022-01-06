@@ -1,4 +1,4 @@
-package com.fzanutto.apiconnection.details
+package com.fzanutto.apiconnection.view.details
 
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
@@ -58,8 +58,9 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun setupMap() {
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragmentWrapper
-        mapFragment.listener = object: SupportMapFragmentWrapper.OnTouchListener {
+        val mapFragment =
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragmentWrapper
+        mapFragment.listener = object : SupportMapFragmentWrapper.OnTouchListener {
             override fun onTouch() {
                 binding.scrollView.requestDisallowInterceptTouchEvent(true)
             }
@@ -68,7 +69,7 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
+        when (item.itemId) {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
@@ -94,7 +95,7 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .load(event.imageUrl)
                 .placeholder(circularProgressDrawable)
                 .fitCenter()
-                .listener(object: RequestListener<Drawable> {
+                .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
                         e: GlideException?,
                         model: Any?,

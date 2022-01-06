@@ -25,11 +25,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".details.EventDetailsActivity"
+            android:name="com.fzanutto.apiconnection.view.details.EventDetailsActivity"
             android:exported="false"/>
 
         <activity
-            android:name=".home.HomeActivity"
+            android:name="com.fzanutto.apiconnection.view.home.HomeActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ApiConnection.NoActionBar">
