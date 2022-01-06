@@ -129,6 +129,6 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val point = LatLng(event.latitude, event.longitude)
         mMap.addMarker(MarkerOptions().position(point).title(event.title))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 12f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 13f))
     }
 }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fzanutto.apiconnection.databinding.HomeActivityBinding
+import com.fzanutto.apiconnection.network.ApiConnectionImpl
 import com.fzanutto.apiconnection.network.ApiDummy
 import com.fzanutto.apiconnection.viewmodel.MainViewModel
 import com.fzanutto.apiconnection.viewmodel.MainViewModelFactory
@@ -26,7 +27,7 @@ class HomeActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         swipeRefreshLayout.setOnRefreshListener(this)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, MainViewModelFactory(this.application, ApiDummy())).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, MainViewModelFactory(this.application, ApiConnectionImpl(this)))[MainViewModel::class.java]
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
 
