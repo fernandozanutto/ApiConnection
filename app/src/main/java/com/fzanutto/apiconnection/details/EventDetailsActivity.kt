@@ -1,18 +1,23 @@
 package com.fzanutto.apiconnection.details
 
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.FrameLayout
-import androidx.fragment.app.FragmentContainerView
+import android.view.MenuItem
+import android.view.View
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.fzanutto.apiconnection.R
 import com.fzanutto.apiconnection.databinding.ActivityEventDetailsBinding
 import com.fzanutto.apiconnection.model.Event
+import com.fzanutto.apiconnection.utils.SupportMapFragmentWrapper
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -30,23 +35,43 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
 
         binding = ActivityEventDetailsBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        val actionBar = supportActionBar
+        actionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowTitleEnabled(false)
+            elevation = 0f
+        }
+
 
         val bundle = intent.extras
         (bundle?.getSerializable(EVENT_BUNDLE_KEY) as? Event)?.let {
             event = it
-        } ?: run {
-            finish()
-        }
+        } ?: finish()
 
-        setViewContent()
+        setupMap()
+        setupViewData()
     }
 
-    private fun setViewContent() {
+    private fun setupMap() {
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragmentWrapper
+        mapFragment.listener = object: SupportMapFragmentWrapper.OnTouchListener {
+            override fun onTouch() {
+                binding.scrollView.requestDisallowInterceptTouchEvent(true)
+            }
+        }
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setupViewData() {
         binding.apply {
             title.text = event.title
             description.text = event.description
@@ -60,8 +85,29 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
             Glide.with(binding.root)
                 .load(event.imageUrl)
                 .placeholder(circularProgressDrawable)
-                .centerCrop()
-                .error(R.drawable.ic_launcher_foreground)
+                .fitCenter()
+                .listener(object: RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        binding.image.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+
+                })
                 .into(binding.image)
         }
     }
@@ -69,6 +115,8 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+        mMap.uiSettings.setAllGesturesEnabled(true)
 
         val point = LatLng(event.latitude, event.longitude)
         mMap.addMarker(MarkerOptions().position(point).title(event.title))
