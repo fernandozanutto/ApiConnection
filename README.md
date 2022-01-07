@@ -16,7 +16,7 @@ Utilizada a arquitetura MVVM, separando as classes do projeto entre Models, View
 - LiveData
 - Google Maps SDK
 - Glide
-- Volley
+- Volley (nenhum preferência específica em relação ao Retrofit, apenas quis utilizar uma biblioteca diferente para este projeto)
 - SwipeRefreshLayout
 
 ### TODO (melhorias possíveis no projeto)
