@@ -20,6 +20,7 @@ Utilizada a arquitetura MVVM, separando as classes do projeto entre Models, View
 - SwipeRefreshLayout
 
 ### TODO (melhorias possíveis no projeto)
+- [ ] Validação nos campos de nome e e-mail no formulário de check-in
 - [ ] Mensagem informando quando dispositivo não está com conexão com a internet e quando não há nenhum evento na lista.
 - [ ] Persistência dos dados recebidos pela API para que o aplicativo não fique 100% dependente da internet.
 - [ ] Implementação de testes unitários e de aceitação
