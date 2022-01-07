@@ -10,4 +10,6 @@
     <string name="e_mail">E-mail</string>
     <string name="free">Free</string>
     <string name="share">Share</string>
+    <string name="no_event_found">Nenhum evento encontrado</string>
+    <string name="request_error">Ocorreu um erro</string>
 </resources>

@@ -9,13 +9,13 @@ import com.fzanutto.apiconnection.network.ApiConnection
 class MainViewModel(app: Application, private val api: ApiConnection) : AndroidViewModel(app) {
 
     val eventList = MutableLiveData<List<Event>>()
+    val requestError = MutableLiveData<String>()
 
     fun callEventList() {
         api.getEventList({
             eventList.postValue(it)
         }, {
-
+            requestError.postValue(it)
         })
     }
-
 }

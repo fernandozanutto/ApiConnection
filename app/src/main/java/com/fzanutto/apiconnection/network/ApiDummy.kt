@@ -10,7 +10,7 @@ import java.util.Date
 
 class ApiDummy: ApiConnection {
 
-    private val events = arrayListOf(
+    private val events = arrayListOf<Event>(
         Event("1 Feira de adoção de animais na Redenção", Date(), "http://lproweb.procempa.com.br/pmpa/prefpoa/seda_news/usu_img/Papel%20de%20Parede.png", -51.2146267, -30.0392981, 1,"Vamos ajudar !!\n\nSe você tem n...",  29.99),
         Event("2 Doação de roupas", Date(), "http://fm103.com.br/wp-content/uploads/2017/07/campanha-do-agasalho-balneario-camboriu-2016.jpg", -51.2148497, -30.037878, 2,"O Patas Dadas estará na Redenção, ness...",  59.99),
         Event("", null, "", Double.NaN, Double.NaN, 3,"O Patas Dadas estará na Redenção, ness...",  null),
@@ -25,7 +25,7 @@ class ApiDummy: ApiConnection {
 
     override fun getEventList(onSuccess: (events: List<Event>) -> Unit,  onFailure: (error: String) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
-            delay(400)
+            delay(800)
             onSuccess(events)
         }
     }
