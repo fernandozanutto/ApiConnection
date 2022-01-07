@@ -91,7 +91,7 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ROOT)
                 date.text = dateFormat.format(it)
             } ?: run {
-                date.visibility = View.GONE
+                dateLayout.visibility = View.GONE
             }
 
             event.price?.let {

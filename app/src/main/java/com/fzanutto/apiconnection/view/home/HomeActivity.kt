@@ -27,7 +27,10 @@ class HomeActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         swipeRefreshLayout.setOnRefreshListener(this)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, MainViewModelFactory(this.application, ApiDummy()))[MainViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            MainViewModelFactory(this.application, ApiDummy())
+        )[MainViewModel::class.java]
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
 
