@@ -6,12 +6,12 @@
         android:contentDescription="@string/check_in"
         android:icon="@drawable/ic_baseline_emoji_people_24"
         android:title="@string/check_in"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/share_toolbar"
         android:contentDescription="@string/share"
         android:icon="@drawable/ic_baseline_share_24"
         android:title="@string/share"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 </menu>

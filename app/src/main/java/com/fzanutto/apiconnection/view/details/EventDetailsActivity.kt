@@ -1,5 +1,6 @@
 package com.fzanutto.apiconnection.view.details
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -74,6 +75,38 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showCheckInModal() {
+        val fragmentManager = supportFragmentManager
+
+        val bottomSheet =
+            BottomSheet(binding.root, event.id, ApiConnectionImpl(this@EventDetailsActivity))
+        bottomSheet.show(fragmentManager, BottomSheet.TAG)
+    }
+
+    private fun showShareModal() {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+
+        var body = event.title
+
+        event.date?.let { date ->
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ROOT)
+            body += "\nData: ${dateFormat.format(date)}"
+        }
+
+        event.price?.let { price ->
+            val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+            body += "\nValor: ${numberFormat.format(price)}"
+        }
+        if (!event.longitude.isNaN() && !event.latitude.isNaN()) {
+            body += "\nhttps://www.google.com/maps/@${event.latitude},${event.longitude},13z"
+        }
+
+        shareIntent.putExtra(Intent.EXTRA_TEXT, body)
+
+        startActivity(Intent.createChooser(shareIntent, "Compartilhar"))
+    }
+
     private fun setupViewData() {
         binding.apply {
 
@@ -82,11 +115,13 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
             }
 
             toolbar.setOnMenuItemClickListener {
-                when(it.itemId) {
+                when (it.itemId) {
                     R.id.share_toolbar -> {
+                        showShareModal()
                         true
                     }
                     R.id.check_in_toobar -> {
+                        showCheckInModal()
                         true
                     }
                     else -> false
@@ -116,10 +151,7 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
             }
 
             checkIn.setOnClickListener {
-                val fragmentManager = supportFragmentManager
-
-                val bottomSheet = BottomSheet(it, event.id, ApiConnectionImpl(this@EventDetailsActivity))
-                bottomSheet.show(fragmentManager, BottomSheet.TAG)
+                showCheckInModal()
             }
 
             event.imageUrl?.let {
