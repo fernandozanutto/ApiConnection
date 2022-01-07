@@ -59,7 +59,11 @@ class ApiConnectionImpl(context: Context) : ApiConnection {
                 onSuccess(events)
             },
             {
-                onFailure(it.networkResponse.statusCode.toString())
+                if (it.networkResponse != null) {
+                    onFailure(it.networkResponse.statusCode.toString())
+                } else {
+                    onFailure("Erro de rede")
+                }
             })
 
 
@@ -85,7 +89,11 @@ class ApiConnectionImpl(context: Context) : ApiConnection {
                 onSuccess()
             },
             {
-                onFailure(it.networkResponse.statusCode.toString())
+                if (it.networkResponse != null) {
+                    onFailure(it.networkResponse.statusCode.toString())
+                } else {
+                    onFailure("Erro de rede")
+                }
             }
         )
 
