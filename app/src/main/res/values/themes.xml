@@ -6,22 +6,15 @@
         <item name="colorPrimaryVariant">@color/blue</item>
         <item name="colorPrimaryDark">@color/background</item> <!-- App top bar (notifications) -->
         <item name="colorOnPrimary">@color/dark_gray</item>
-
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue</item>
-        <item name="colorSecondaryVariant">@color/red</item>
-        <item name="colorOnSecondary">@color/teal_200</item>
-
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/gray</item>
 
-        <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="windowActionBar">true</item>
         <item name="actionBarStyle">@style/ActionBar</item>
 
-        <item name="android:textColor">@color/dark_gray</item>
         <item name="fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/dark_gray</item>
     </style>
 
     <style name="ActionBar" parent="Widget.AppCompat.ActionBar">
@@ -31,10 +24,6 @@
     <style name="Theme.ApiConnection.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.ApiConnection.Card" parent="Widget.MaterialComponents.CardView">
-        <item name="elevation">1dp</item>
     </style>
 
     <style name="Theme.ApiConnection.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
