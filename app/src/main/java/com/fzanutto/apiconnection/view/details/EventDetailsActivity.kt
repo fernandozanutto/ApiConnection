@@ -45,13 +45,6 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
         binding = ActivityEventDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val actionBar = supportActionBar
-        actionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowTitleEnabled(false)
-            elevation = 0f
-        }
-
         val bundle = intent.extras
         (bundle?.getSerializable(EVENT_BUNDLE_KEY) as? Event)?.let {
             event = it
@@ -61,7 +54,6 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
 
         setupMap()
         setupViewData()
-
     }
 
     private fun setupMap() {
@@ -84,6 +76,24 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
 
     private fun setupViewData() {
         binding.apply {
+
+            toolbar.setNavigationOnClickListener {
+                finish()
+            }
+
+            toolbar.setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.share_toolbar -> {
+                        true
+                    }
+                    R.id.check_in_toobar -> {
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+
             title.text = event.title
             description.text = event.description
 
