@@ -3,6 +3,7 @@ package com.fzanutto.apiconnection.view.details
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -16,17 +17,19 @@ import com.bumptech.glide.request.target.Target
 import com.fzanutto.apiconnection.R
 import com.fzanutto.apiconnection.databinding.ActivityEventDetailsBinding
 import com.fzanutto.apiconnection.model.Event
+import com.fzanutto.apiconnection.network.ApiConnectionImpl
 import com.fzanutto.apiconnection.utils.SupportMapFragmentWrapper
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
+class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestListener<Drawable> {
 
     private lateinit var binding: ActivityEventDetailsBinding
     private lateinit var mMap: GoogleMap
@@ -49,14 +52,16 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
             elevation = 0f
         }
 
-
         val bundle = intent.extras
         (bundle?.getSerializable(EVENT_BUNDLE_KEY) as? Event)?.let {
             event = it
-        } ?: finish()
+        } ?: run {
+            finish()
+        }
 
         setupMap()
         setupViewData()
+
     }
 
     private fun setupMap() {
@@ -82,52 +87,52 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
             title.text = event.title
             description.text = event.description
 
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT)
-            date.text = dateFormat.format(event.date)
+            event.date?.let {
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ROOT)
+                date.text = dateFormat.format(it)
+            } ?: run {
+                date.visibility = View.GONE
+            }
 
-            val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
-            price.text = numberFormat.format(event.price)
+            event.price?.let {
+                price.text = if (it != 0.0) {
+                    val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+                    numberFormat.format(it)
+                } else {
+                    this@EventDetailsActivity.getString(R.string.free)
+                }
+            } ?: run {
+                priceLayout.visibility = View.GONE
+            }
 
             checkIn.setOnClickListener {
                 val fragmentManager = supportFragmentManager
 
-                val bottomSheet = BottomSheet()
-
+                val bottomSheet = BottomSheet(it, event.id, ApiConnectionImpl(this@EventDetailsActivity))
                 bottomSheet.show(fragmentManager, BottomSheet.TAG)
             }
 
-            val circularProgressDrawable = CircularProgressDrawable(this@EventDetailsActivity)
-            circularProgressDrawable.strokeWidth = 5f
-            circularProgressDrawable.centerRadius = 30f
-            circularProgressDrawable.start()
+            event.imageUrl?.let {
+                if (it.isEmpty()) {
+                    image.visibility = View.GONE
+                    return
+                }
 
-            Glide.with(binding.root)
-                .load(event.imageUrl)
-                .placeholder(circularProgressDrawable)
-                .fitCenter()
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        binding.image.visibility = View.GONE
-                        return false
-                    }
+                val circularProgressDrawable = CircularProgressDrawable(this@EventDetailsActivity)
+                circularProgressDrawable.strokeWidth = 5f
+                circularProgressDrawable.centerRadius = 30f
+                circularProgressDrawable.start()
 
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        return false
-                    }
-
-                })
-                .into(binding.image)
+                Glide.with(root)
+                    .load(it)
+                    .placeholder(circularProgressDrawable)
+                    .fitCenter()
+                    .timeout(3000)
+                    .listener(this@EventDetailsActivity)
+                    .into(image)
+            } ?: run {
+                image.visibility = View.GONE
+            }
         }
     }
 
@@ -135,10 +140,35 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        if (event.latitude.isNaN() || event.longitude.isNaN()) {
+            binding.map.visibility = View.GONE
+            return
+        }
+
         mMap.uiSettings.setAllGesturesEnabled(true)
 
         val point = LatLng(event.latitude, event.longitude)
         mMap.addMarker(MarkerOptions().position(point).title(event.title))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 13f))
+    }
+
+    override fun onLoadFailed(
+        e: GlideException?,
+        model: Any?,
+        target: Target<Drawable>?,
+        isFirstResource: Boolean
+    ): Boolean {
+        binding.image.visibility = View.GONE
+        return false
+    }
+
+    override fun onResourceReady(
+        resource: Drawable?,
+        model: Any?,
+        target: Target<Drawable>?,
+        dataSource: DataSource?,
+        isFirstResource: Boolean
+    ): Boolean {
+        return false
     }
 }

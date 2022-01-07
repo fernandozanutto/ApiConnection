@@ -27,13 +27,13 @@ class HomeActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         swipeRefreshLayout.setOnRefreshListener(this)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, MainViewModelFactory(this.application, ApiConnectionImpl(this)))[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this, MainViewModelFactory(this.application, ApiDummy()))[MainViewModel::class.java]
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
 
         binding.eventList.layoutManager = layoutManager
 
-        adapter = EventAdapter(listOf())
+        adapter = EventAdapter(arrayListOf())
         binding.eventList.adapter = adapter
 
         viewModel.eventList.observe(this, {

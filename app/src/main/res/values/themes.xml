@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item> <!-- buttons background -->
         <item name="colorPrimaryVariant">@color/blue</item>
-        <item name="colorPrimaryDark">@color/background</item> <!-- App top bar (notifications) -->
+        <item name="colorPrimaryDark">@color/light_gray</item> <!-- App top bar (notifications) -->
         <item name="colorOnPrimary">@color/dark_gray</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/gray</item>
@@ -18,7 +18,7 @@
     </style>
 
     <style name="ActionBar" parent="Widget.AppCompat.ActionBar">
-        <item name="background">@color/background</item>
+        <item name="background">@color/light_gray </item>
     </style>
 
     <style name="Theme.ApiConnection.NoActionBar">
