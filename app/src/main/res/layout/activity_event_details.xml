@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".view.details.EventDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/standard_bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.details.EventDetailsActivity">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/image"
@@ -34,18 +36,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/check_in"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:icon="@drawable/ic_baseline_emoji_people_24"
-            app:iconTint="@color/dark_gray"
-            android:textColor="@color/dark_gray"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
             android:text="@string/check_in"
-            />
+            android:textColor="@color/black"
+            app:icon="@drawable/ic_baseline_emoji_people_24"
+            app:iconTint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/price_layout" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/date_layout"
@@ -54,7 +57,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/check_in">
+            app:layout_constraintTop_toBottomOf="@id/title">
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:layout_width="wrap_content"
@@ -74,9 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            app:layout_constraintBottom_toTopOf="@id/description"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/check_in">
+            app:layout_constraintTop_toBottomOf="@+id/title">
 
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:layout_width="wrap_content"
@@ -97,7 +99,7 @@
             android:padding="20dp"
             android:text="@string/placeholder_description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/price_layout" />
+            app:layout_constraintTop_toBottomOf="@id/check_in" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
