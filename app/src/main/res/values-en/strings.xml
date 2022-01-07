@@ -1,13 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Eventos</string>
-    <string name="image_description">Imagem do evento</string>
-    <string name="placeholder_date" translatable="false">23/12/2022</string>
-    <string name="placeholder_price" translatable="false">R$ 29,99</string>
-    <string name="hello_home">Veja nossos eventos</string>
+    <string name="app_name">Events</string>
+    <string name="image_description">Event image</string>
+    <string name="hello_home">Check out our events</string>
     <string name="placeholder_description">Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.</string>
     <string name="check_in">Check-in</string>
-    <string name="send">Enviar</string>
-    <string name="name">Nome</string>
+    <string name="send">Send</string>
+    <string name="name">Name</string>
     <string name="e_mail">E-mail</string>
-    <string name="free">Gratuito</string>
+    <string name="free">Free</string>
 </resources>

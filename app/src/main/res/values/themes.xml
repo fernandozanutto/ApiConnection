@@ -18,7 +18,7 @@
     </style>
 
     <style name="ActionBar" parent="Widget.AppCompat.ActionBar">
-        <item name="background">@color/light_gray </item>
+        <item name="background">@color/light_gray</item>
     </style>
 
     <style name="Theme.ApiConnection.NoActionBar">
@@ -26,7 +26,4 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.ApiConnection.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
-
-    <style name="Theme.ApiConnection.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
