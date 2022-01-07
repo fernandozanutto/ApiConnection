@@ -10,12 +10,15 @@ import com.fzanutto.apiconnection.model.Event
 import org.json.JSONObject
 import java.util.Date
 
-class ApiConnectionImpl(context: Context): ApiConnection {
+class ApiConnectionImpl(context: Context) : ApiConnection {
 
     private val volleyQueue = Volley.newRequestQueue(context)
     private val baseUrl = "http://5f5a8f24d44d640016169133.mockapi.io/api/"
 
-    override fun getEventList(onSuccess: (events: List<Event>) -> Unit,  onFailure: (error: String) -> Unit) {
+    override fun getEventList(
+        onSuccess: (events: List<Event>) -> Unit,
+        onFailure: (error: String) -> Unit
+    ) {
         val jsonRequest = JsonArrayRequest(
             baseUrl + "events",
             { response ->
@@ -29,7 +32,7 @@ class ApiConnectionImpl(context: Context): ApiConnection {
                     val imageUrl = eventJson.getString("image")
 
                     val lon = eventJson.optDouble("longitude")
-                    val lat =  eventJson.optDouble("latitude")
+                    val lat = eventJson.optDouble("latitude")
 
                     val date = eventJson.optLong("date", -1L).let {
                         if (it != -1L) Date(it) else null
@@ -38,8 +41,6 @@ class ApiConnectionImpl(context: Context): ApiConnection {
                     val price = eventJson.optDouble("price", -1.0).let {
                         if (it != -1.0) it else null
                     }
-
-                    if (id == 0) continue
 
                     events.add(
                         Event(
@@ -65,11 +66,11 @@ class ApiConnectionImpl(context: Context): ApiConnection {
         volleyQueue.add(jsonRequest)
     }
 
-    override fun getEventById(id: Int, onSuccess: (event: Event) -> Unit,  onFailure: (error: String) -> Unit) {
-        TODO("Not yet implemented")
-    }
-
-    override fun sendCheckIn(checkIn: CheckIn, onSuccess: () -> Unit, onFailure: (error: String) -> Unit) {
+    override fun sendCheckIn(
+        checkIn: CheckIn,
+        onSuccess: () -> Unit,
+        onFailure: (error: String) -> Unit
+    ) {
         val jsonObject = JSONObject()
 
         jsonObject.put("name", checkIn.name)

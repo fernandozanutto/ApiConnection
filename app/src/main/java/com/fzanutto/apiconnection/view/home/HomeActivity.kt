@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fzanutto.apiconnection.databinding.HomeActivityBinding
 import com.fzanutto.apiconnection.network.ApiConnectionImpl
-import com.fzanutto.apiconnection.network.ApiDummy
 import com.fzanutto.apiconnection.viewmodel.MainViewModel
 import com.fzanutto.apiconnection.viewmodel.MainViewModelFactory
 

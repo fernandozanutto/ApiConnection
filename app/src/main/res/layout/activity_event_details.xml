@@ -19,7 +19,7 @@
             android:background="@color/light_gray"
             app:menu="@menu/menu"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-            app:navigationIconTint="@color/dark_gray"/>
+            app:navigationIconTint="@color/dark_gray" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView

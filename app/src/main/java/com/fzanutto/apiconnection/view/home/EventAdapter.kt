@@ -3,7 +3,6 @@ package com.fzanutto.apiconnection.view.home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,7 @@ import com.fzanutto.apiconnection.R
 import com.fzanutto.apiconnection.databinding.EventListBinding
 import com.fzanutto.apiconnection.view.details.EventDetailsActivity
 import com.fzanutto.apiconnection.model.Event
-import java.text.NumberFormat
-import java.text.SimpleDateFormat
-import java.util.*
+import com.fzanutto.apiconnection.utils.FormatUtils
 
 class EventAdapter(private var eventList: ArrayList<Event>) :
     RecyclerView.Adapter<EventAdapter.ViewHolder>() {
@@ -28,15 +25,6 @@ class EventAdapter(private var eventList: ArrayList<Event>) :
         notifyItemRangeRemoved(0, size)
         eventList.addAll(list)
         notifyItemRangeInserted(0, eventList.size)
-    }
-
-    inner class ViewHolder(val binding: EventListBinding, private val onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-        init {
-            binding.root.setOnClickListener(this)
-        }
-        override fun onClick(v: View?) {
-            onItemClicked(adapterPosition)
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -62,19 +50,13 @@ class EventAdapter(private var eventList: ArrayList<Event>) :
             title.text = event.title
 
             event.date?.let {
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ROOT)
-                date.text = dateFormat.format(it)
+                date.text = FormatUtils.formatDate("dd/MM/yyyy", it)
             } ?: run {
                 dateLayout.visibility = View.GONE
             }
 
             event.price?.let {
-                price.text = if (it != 0.0) {
-                    val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
-                     numberFormat.format(it)
-                } else {
-                    context.getString(R.string.free)
-                }
+                price.text = FormatUtils.formatCurrency(context, it)
             } ?: run {
                 priceLayout.visibility = View.GONE
             }
@@ -104,4 +86,17 @@ class EventAdapter(private var eventList: ArrayList<Event>) :
     }
 
     override fun getItemCount(): Int = eventList.size
+
+    inner class ViewHolder(
+        val binding: EventListBinding,
+        private val onItemClicked: (position: Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+        init {
+            binding.root.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            onItemClicked(adapterPosition)
+        }
+    }
 }

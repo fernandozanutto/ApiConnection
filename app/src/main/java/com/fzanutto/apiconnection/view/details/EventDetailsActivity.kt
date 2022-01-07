@@ -4,11 +4,8 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -19,16 +16,13 @@ import com.fzanutto.apiconnection.R
 import com.fzanutto.apiconnection.databinding.ActivityEventDetailsBinding
 import com.fzanutto.apiconnection.model.Event
 import com.fzanutto.apiconnection.network.ApiConnectionImpl
+import com.fzanutto.apiconnection.utils.FormatUtils
 import com.fzanutto.apiconnection.utils.SupportMapFragmentWrapper
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.snackbar.Snackbar
-import java.text.NumberFormat
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestListener<Drawable> {
 
@@ -47,12 +41,15 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
         setContentView(binding.root)
 
         val bundle = intent.extras
-        (bundle?.getSerializable(EVENT_BUNDLE_KEY) as? Event)?.let {
+        val eventBundle = bundle?.getSerializable(EVENT_BUNDLE_KEY) as? Event
+
+        eventBundle?.let {
             event = it
         } ?: run {
             finish()
         }
 
+        setupToolbar()
         setupMap()
         setupViewData()
     }
@@ -79,8 +76,9 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
         val fragmentManager = supportFragmentManager
 
         val bottomSheet =
-            BottomSheet(binding.root, event.id, ApiConnectionImpl(this@EventDetailsActivity))
-        bottomSheet.show(fragmentManager, BottomSheet.TAG)
+            CheckInBottomSheet(binding.root, event.id, ApiConnectionImpl(this@EventDetailsActivity))
+
+        bottomSheet.show(fragmentManager, CheckInBottomSheet.TAG)
     }
 
     private fun showShareModal() {
@@ -90,16 +88,15 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
         var body = event.title
 
         event.date?.let { date ->
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ROOT)
-            body += "\nData: ${dateFormat.format(date)}"
+            body += "\nData: ${FormatUtils.formatDate("dd/MM/yyyy HH:mm", date)}"
         }
 
         event.price?.let { price ->
-            val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
-            body += "\nValor: ${numberFormat.format(price)}"
+            body += "\nValor: ${FormatUtils.formatCurrency(this, price)}"
         }
+
         if (!event.longitude.isNaN() && !event.latitude.isNaN()) {
-            body += "\nhttps://www.google.com/maps/@${event.latitude},${event.longitude},13z"
+            body += "\nhttps://www.google.com/maps?q=${event.latitude},${event.longitude},15z"
         }
 
         shareIntent.putExtra(Intent.EXTRA_TEXT, body)
@@ -107,45 +104,39 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
         startActivity(Intent.createChooser(shareIntent, "Compartilhar"))
     }
 
+    private fun setupToolbar() {
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.share_toolbar -> {
+                    showShareModal()
+                    true
+                }
+                R.id.check_in_toobar -> {
+                    showCheckInModal()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
     private fun setupViewData() {
         binding.apply {
-
-            toolbar.setNavigationOnClickListener {
-                finish()
-            }
-
-            toolbar.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.share_toolbar -> {
-                        showShareModal()
-                        true
-                    }
-                    R.id.check_in_toobar -> {
-                        showCheckInModal()
-                        true
-                    }
-                    else -> false
-                }
-            }
-
-
             title.text = event.title
             description.text = event.description
 
             event.date?.let {
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ROOT)
-                date.text = dateFormat.format(it)
+                date.text = FormatUtils.formatDate("dd/MM/yyyy", it)
             } ?: run {
                 dateLayout.visibility = View.GONE
             }
 
             event.price?.let {
-                price.text = if (it != 0.0) {
-                    val numberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
-                    numberFormat.format(it)
-                } else {
-                    this@EventDetailsActivity.getString(R.string.free)
-                }
+                price.text = FormatUtils.formatCurrency(this@EventDetailsActivity, it)
             } ?: run {
                 priceLayout.visibility = View.GONE
             }
@@ -191,7 +182,7 @@ class EventDetailsActivity : AppCompatActivity(), OnMapReadyCallback, RequestLis
 
         val point = LatLng(event.latitude, event.longitude)
         mMap.addMarker(MarkerOptions().position(point).title(event.title))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 13f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15f))
     }
 
     override fun onLoadFailed(

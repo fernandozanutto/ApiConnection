@@ -5,6 +5,5 @@ import com.fzanutto.apiconnection.model.Event
 
 interface ApiConnection {
     fun getEventList(onSuccess: (events: List<Event>) -> Unit,  onFailure: (error: String) -> Unit)
-    fun getEventById(id: Int, onSuccess: (event: Event) -> Unit,  onFailure: (error: String) -> Unit)
     fun sendCheckIn(checkIn: CheckIn, onSuccess: () -> Unit,  onFailure: (error: String) -> Unit)
 }

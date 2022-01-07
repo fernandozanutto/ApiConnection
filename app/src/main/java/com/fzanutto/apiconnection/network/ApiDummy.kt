@@ -30,18 +30,6 @@ class ApiDummy: ApiConnection {
         }
     }
 
-    override fun getEventById(id: Int, onSuccess: (event: Event) -> Unit,  onFailure: (error: String) -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            delay(400)
-
-            events.find { it.id == id }?.let {
-                onSuccess(it)
-            } ?: run {
-                onFailure("404")
-            }
-        }
-    }
-
     override fun sendCheckIn(
         checkIn: CheckIn,
         onSuccess: () -> Unit,
