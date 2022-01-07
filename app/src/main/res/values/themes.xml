@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.ApiConnection" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item> <!-- buttons background -->
+        <item name="colorPrimary">@color/green</item> <!-- buttons background -->
         <item name="colorPrimaryVariant">@color/blue</item>
         <item name="colorPrimaryDark">@color/light_gray</item> <!-- App top bar (notifications) -->
         <item name="colorOnPrimary">@color/dark_gray</item>
@@ -11,15 +11,9 @@
         <item name="colorControlNormal">@color/dark_gray</item>
 
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
-        <item name="windowActionBar">true</item>
-        <item name="actionBarStyle">@style/ActionBar</item>
 
         <item name="fontFamily">sans-serif-light</item>
         <item name="android:textColor">@color/dark_gray</item>
-    </style>
-
-    <style name="ActionBar" parent="Widget.AppCompat.ActionBar">
-        <item name="background">@color/light_gray</item>
     </style>
 
     <style name="Theme.ApiConnection.NoActionBar">

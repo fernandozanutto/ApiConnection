@@ -23,7 +23,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:lines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -40,7 +42,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:lines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -49,7 +53,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:backgroundTint="@color/green"
             android:text="@string/send"
             android:textColor="@color/white"
             app:icon="@drawable/ic_baseline_check_24"

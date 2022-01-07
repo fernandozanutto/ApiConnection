@@ -64,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/green"
                 android:text="@string/check_in"
                 android:textColor="@color/white"
                 app:icon="@drawable/ic_baseline_emoji_people_24"

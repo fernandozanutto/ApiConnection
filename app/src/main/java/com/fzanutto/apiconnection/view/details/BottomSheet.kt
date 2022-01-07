@@ -15,7 +15,8 @@ import com.google.android.material.snackbar.Snackbar
 class BottomSheet(
     private val parentView: View,
     private val eventId: Int,
-    private val api: ApiConnection) : BottomSheetDialogFragment() {
+    private val api: ApiConnection
+) : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "BottomSheet"
@@ -50,13 +51,22 @@ class BottomSheet(
 
                 api.sendCheckIn(checkIn, {
                     Snackbar.make(parentView, "Check-in feito com sucesso!", Snackbar.LENGTH_SHORT)
-                        .setBackgroundTint(ContextCompat.getColor(parentView.context, R.color.green))
+                        .setBackgroundTint(
+                            ContextCompat.getColor(
+                                parentView.context,
+                                R.color.green
+                            )
+                        )
                         .setTextColor(ContextCompat.getColor(parentView.context, R.color.white))
                         .show()
 
                     dismiss()
                 }, {
-                    Snackbar.make(parentView, "Erro ao realizar check-in. Código: $it", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(
+                        parentView,
+                        "Erro ao realizar check-in. Código: $it",
+                        Snackbar.LENGTH_SHORT
+                    )
                         .setBackgroundTint(ContextCompat.getColor(parentView.context, R.color.red))
                         .setTextColor(ContextCompat.getColor(parentView.context, R.color.white))
                         .show()
