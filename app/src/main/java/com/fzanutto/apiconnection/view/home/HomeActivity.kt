@@ -38,11 +38,10 @@ class HomeActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
 
         setupEventList()
         setupObservers()
+        refresh()
     }
 
-    override fun onStart() {
-        super.onStart()
-
+    private fun refresh() {
         swipeRefreshLayout.isRefreshing = true
         viewModel.callEventList()
     }
