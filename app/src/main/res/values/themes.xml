@@ -1,12 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Theme.ApiConnection" parent="Theme.MaterialComponents.DayNight">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green</item> <!-- buttons background -->
         <item name="colorPrimaryDark">@color/light_gray</item> <!-- App top bar (notifications) -->
-        <item name="colorOnPrimary">@color/dark_gray</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/gray</item>
+        <item name="colorSurface">@color/white</item> <!-- background dos cards e modal -->
+        <item name="colorOnSurface">@color/gray</item> <!-- fundo dos inputs e ripple dos cards-->
         <item name="colorControlNormal">@color/dark_gray</item> <!-- Toolbar navigationIconTint -->
 
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
