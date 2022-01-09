@@ -1,0 +1,26 @@
+<resources>
+    <style name="Theme.ApiConnection" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/green</item> <!-- buttons background -->
+        <item name="colorPrimaryDark">@color/dark_gray</item> <!-- App top bar (notifications) -->
+        <item name="colorSurface">@color/gray</item> <!-- background dos cards e modal -->
+        <item name="colorOnSurface">@color/light_gray</item> <!-- fundo dos inputs e ripple dos cards-->
+        <item name="colorControlNormal">@color/white</item> <!-- Toolbar navigationIconTint -->
+
+        <item name="fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Theme.ApiConnection.DefaultScreen">
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+
+    <style name="Theme.ApiConnection.DefaultAppToolBar">
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+
+    <style name="Theme.ApiConnection.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+</resources>

@@ -39,7 +39,6 @@
                 android:layout_height="140dp"
                 android:contentDescription="@string/image_description"
                 android:paddingBottom="20dp"
-                android:src="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
