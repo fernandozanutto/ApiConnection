@@ -24,4 +24,4 @@ Utilizada a arquitetura MVVM, separando as classes do projeto entre Models, View
 - [X] Mensagem informando quando lista de eventos for vazia ou quando ocorreu um erro ao receber a lista.
 - [ ] Persistência dos dados recebidos pela API para que o aplicativo não fique 100% dependente da internet.
 - [ ] Implementação de testes unitários e de aceitação
-- [ ] Implementação de tema escuro
+- [X] Implementação de tema escuro
